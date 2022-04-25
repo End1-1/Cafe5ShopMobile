@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.ShopMobile" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textViewStyle">@style/BSTextView</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:imageButtonStyle">@style/BSImageButton</item>
+    </style>
+
+    <style name="BSTextView" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="BSImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:scaleType">fitXY</item>
+        <item name="background">@null</item>
+    </style>
+
+</resources>

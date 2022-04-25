@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name" translatable="false">ShopMobile</string>
+    <string name="connecting_to_server">connecting to server</string>
+    <string name="connection_settings">connection settings</string>
+    <string name="back">back</string>
+    <string name="server_address">server address</string>
+    <string name="server_port">server port</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="database">database</string>
+</resources>

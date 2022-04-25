@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="connecting_to_server">կապի հաստատում սերվերի հետ</string>
+    <string name="connection_settings">կապի կարգավորումներ</string>
+    <string name="back">հետ</string>
+    <string name="server_address">սերվերի հասցե</string>
+    <string name="server_port">սեռվերի պորտ</string>
+    <string name="username">օգտագործող</string>
+    <string name="password">գաղտնաբար</string>
+    <string name="database">տվյալների պահոց</string>
+</resources>
