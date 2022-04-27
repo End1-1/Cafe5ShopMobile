@@ -3,7 +3,8 @@
     <style name="Theme.ShopMobile" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textViewStyle">@style/BSTextView</item>
         <item name="android:windowBackground">@color/white</item>
-        <item name="android:imageButtonStyle">@style/BSImageButton</item>
+        <item name="imageButtonStyle">@style/BSImageButton</item>
+        <item name="editTextStyle">@style/BSEditText</item>
     </style>
 
     <style name="BSTextView" parent="@style/Widget.AppCompat.TextView">
@@ -12,7 +13,14 @@
 
     <style name="BSImageButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:scaleType">fitXY</item>
-        <item name="background">@null</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="BSEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/menubg2</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="hintTextColor">@color/gray</item>
+        <item name="android:padding">3dp</item>
     </style>
 
 </resources>

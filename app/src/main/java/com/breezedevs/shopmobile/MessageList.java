@@ -13,4 +13,5 @@ public class MessageList {
     public static final short balance_history = 7;
     public static final short monitor = 8;
     public static final short car_near = 9;
+    public static final short dll_op = 10;
 }

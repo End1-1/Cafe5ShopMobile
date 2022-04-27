@@ -9,8 +9,6 @@ import java.util.Locale;
 
 public final class Preference {
 
-    public static String mHost = "195.191.155.164";
-    public static int mPort = 10002;
     private static final String prefName  = "com.breezedevs.shopmobile";
 
     private static SharedPreferences pref(Context context) {

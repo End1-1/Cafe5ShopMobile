@@ -8,4 +8,10 @@
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="database">database</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="check_quantity_reserve">check quantity / reserve</string>
+    <string name="transfer_to_office">transfer to office</string>
+    <string name="scancode">scancode</string>
+    <string name="name">name</string>
+    <string name="price">price</string>
 </resources>

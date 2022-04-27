@@ -135,11 +135,12 @@ public class MessageMaker {
     }
 
     public void putString(String s) {
-        int strSize = s.getBytes(StandardCharsets.UTF_8).length;
+        int strSize = s.getBytes(StandardCharsets.UTF_8).length + 1;
         ByteBuffer bb = ByteBuffer.allocate(4 + strSize);
         bb.order(ByteOrder.LITTLE_ENDIAN);
-        bb.putInt(s.getBytes(StandardCharsets.UTF_8).length);
+        bb.putInt(strSize);
         bb.put(s.getBytes(StandardCharsets.UTF_8));
+        bb.put((byte) 0x00);
         ByteBuffer out = ByteBuffer.allocate(mBuffer.length + bb.array().length);
         out.put(mBuffer);
         out.put(bb.array());

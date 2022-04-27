@@ -101,7 +101,7 @@ public class ServiceSocket {
                 SSLSocketFactory sf = sslSocketFactory();
                 SSLSocketFactory factory = sf; //(SSLSocketFactory) SSLSocketFactory.getDefault();
                 SSLSocket socket = (SSLSocket) factory.createSocket();
-                socket.connect(new InetSocketAddress(Preference.mHost, Preference.mPort), 3000);
+                socket.connect(new InetSocketAddress(Preference.getString("server_address"), Integer.valueOf(Preference.getString("server_port"))), 3000);
                 socket.setSoTimeout(3000);
                 socket.startHandshake();
 

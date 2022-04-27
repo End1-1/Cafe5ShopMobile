@@ -8,4 +8,9 @@
     <string name="username">օգտագործող</string>
     <string name="password">գաղտնաբար</string>
     <string name="database">տվյալների պահոց</string>
+    <string name="transfer_to_office">ուղարկել օֆիս ծրագիր</string>
+    <string name="check_quantity_reserve">ստուգել քանակը / ամրագրել</string>
+    <string name="scancode">շտրիխ կոդ</string>
+    <string name="name">անվանում</string>
+    <string name="price">մանրածախ գին</string>
 </resources>

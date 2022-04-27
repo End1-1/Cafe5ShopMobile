@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.breezedevs.shopmobile">
 
+    <uses-sdk tools:overrideLibrary="androidx.camera.camera2, androidx.camera.core, androidx.camera.view, androidx.camera.lifecycle" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,6 +21,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShopMobile">
+        <activity
+            android:name=".ActivityTransferToOffice"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityCheckQuantity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityCodeReader"
+            android:exported="false" />
         <activity
             android:name=".ActivitySettings"
             android:exported="false" />

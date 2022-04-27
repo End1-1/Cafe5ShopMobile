@@ -10,8 +10,6 @@
         android:id="@+id/llBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
         android:background="@drawable/menubg2"
         android:gravity="center"
         android:orientation="horizontal"
@@ -23,8 +21,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginLeft="5dp"
             app:srcCompat="@drawable/back" />
 
@@ -69,13 +67,14 @@
 
             <EditText
                 android:id="@+id/edtServerAddress"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:minHeight="48dp"
                 android:text="Name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,13 +92,14 @@
 
             <EditText
                 android:id="@+id/edtServerPort"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:inputType="number"
+                android:minHeight="48dp"
                 android:text="Name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,13 +117,14 @@
 
             <EditText
                 android:id="@+id/edtUsername"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:minHeight="48dp"
                 android:text="Name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -140,14 +141,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/edtUsername" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName4"
-                android:layout_width="0dp"
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
                 android:text="Name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -161,21 +163,38 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/database"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+                app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName5"
-                android:layout_width="0dp"
+                android:id="@+id/edtDatabase"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:minHeight="48dp"
                 android:text="Name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+                <ImageButton
+                    android:id="@+id/btnReadFromQr"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/qr_code" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
