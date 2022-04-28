@@ -11,6 +11,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.breezedevs.shopmobile.databinding.ActivitySettingsBinding;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ActivitySettings extends ActivityClass {
 
     private ActivitySettingsBinding _b;
@@ -64,6 +68,14 @@ public class ActivitySettings extends ActivityClass {
                         return;
                     }
                     String code = activityResult.getData().getStringExtra("code");
+                    List<String> params = Arrays.asList(code.split(";"));
+                    if (params.size() == 5) {
+                        _b.edtServerAddress.setText(params.get(0));
+                        _b.edtServerPort.setText(params.get(1));
+                        _b.edtUsername.setText(params.get(2));
+                        _b.edtPassword.setText(params.get(3));
+                        _b.edtDatabase.setText(params.get(4));
+                    }
                 }
             });
 }

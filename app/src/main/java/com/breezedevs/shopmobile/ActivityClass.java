@@ -135,12 +135,11 @@ public class ActivityClass extends AppCompatActivity implements View.OnClickList
                     if (intent.getBooleanExtra(MessageMaker.NETWORK_ERROR, false)) {
                         return;
                     }
-                    int reply = MessageMaker.bytesToInt(intent.getByteArrayExtra("data"));
+                    MessageMaker mm = new MessageMaker(MessageList.utils);
+                    byte[] data = intent.getByteArrayExtra("data");
+                    int reply = mm.getInt(data);
                     if (reply > 0) {
                         Preference.setInt("server_userid", reply);
-                        MessageMaker messageMaker = new MessageMaker(MessageList.yandex_mapkit_key);
-                        messageMaker.putByte((byte) 1);
-                        sendMessage(messageMaker);
                         Intent loginSuccess = new Intent(MessageMaker.BROADCAST_DATA);
                         loginSuccess.putExtra("local", true);
                         loginSuccess.putExtra("type", MessageList.login_status);

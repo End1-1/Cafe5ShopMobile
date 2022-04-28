@@ -192,10 +192,10 @@ public class ServiceSocket {
                         System.arraycopy(bytes, 7, buffMsgId, 0, 4);
                         System.arraycopy(bytes, 11, buffMsgType, 0, 2);
                         System.arraycopy(bytes, 13, buffPacketSize, 0, 4);
-                        msgNum = MessageMaker.bytesToInt(buffMsgNum);
-                        msgId = MessageMaker.bytesToInt(buffMsgId);
-                        msgType = MessageMaker.bytesToShort(buffMsgType);
-                        mBytesLeft = MessageMaker.bytesToInt(buffPacketSize);
+                        msgNum = new MessageMaker(MessageList.utils).getInt(buffMsgNum);
+                        msgId = new MessageMaker(MessageList.utils).getInt(buffMsgId);
+                        msgType = new MessageMaker(MessageList.utils).getShort(buffMsgType);
+                        mBytesLeft = new MessageMaker(MessageList.utils).getInt(buffPacketSize);
                         mBuffer = new byte [mBytesLeft];
                         mBufferPos = 0;
                     }

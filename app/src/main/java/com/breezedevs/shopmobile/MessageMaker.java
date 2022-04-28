@@ -18,6 +18,7 @@ public class MessageMaker {
     private static int mMessageIdCounter = 1;
     public static int mMessageId = 0;
     private static short mMessageType = 0;
+    public int mPosition = 0;
 
     public MessageMaker(short c) {
         mMessageType = c;
@@ -39,39 +40,39 @@ public class MessageMaker {
         System.arraycopy(buf, 0, mBuffer, 11, 2);
     }
 
-    public static double bytesToDouble(byte[] bytes, int offcet) {
+    public double getDouble(byte[] bytes) {
         ByteBuffer bb = ByteBuffer.allocate(8);
         bb.order(ByteOrder.LITTLE_ENDIAN);
-        bb.put(bytes, offcet, 8);
+        bb.put(bytes, mPosition, 8);
+        mPosition += 8;
         return bb.getDouble(0);
     }
 
-    public static int bytesToInt(byte[] bytes) {
+    public byte getByte(byte[] bytes) {
+        return bytes[mPosition++];
+    }
+
+    public int getInt(byte[] bytes) {
         ByteBuffer bb = ByteBuffer.allocate(4);
         bb.order(ByteOrder.LITTLE_ENDIAN);
-        bb.put(bytes);
+        bb.put(bytes, mPosition, 4);
+        mPosition += 4;
         return bb.getInt(0);
     }
 
-    public static int bytesToInt(byte[] bytes, int offcet) {
-        ByteBuffer bb = ByteBuffer.allocate(4);
-        bb.order(ByteOrder.LITTLE_ENDIAN);
-        bb.put(bytes, offcet, 4);
-        return bb.getInt(0);
-    }
-
-    public static short bytesToShort(byte[] bytes) {
+    public short getShort(byte[] bytes) {
         ByteBuffer bb = ByteBuffer.allocate(2);
         bb.order(ByteOrder.LITTLE_ENDIAN);
-        bb.put(bytes[0]);
-        bb.put(bytes[1]);
+        bb.put(bytes[mPosition]);
+        bb.put(bytes[mPosition + 1]);
+        mPosition += 2;
         return bb.getShort(0);
     }
 
     private void correctSize(int delta) {
         byte[] buf = new byte[4];
         System.arraycopy(mBuffer, 13, buf, 0, 4);
-        int newSize = bytesToInt(buf) + delta;
+        int newSize = new MessageMaker(MessageList.utils).getInt(buf) + delta;
         ByteBuffer bb = ByteBuffer.allocate(4);
         bb.order(ByteOrder.LITTLE_ENDIAN);
         buf = bb.putInt(newSize).array();
@@ -81,13 +82,13 @@ public class MessageMaker {
     public int getMessageId() {
         byte[] bb = new byte[4];
         System.arraycopy(mBuffer, 7, bb, 0, 4);
-        return bytesToInt(bb);
+        return new MessageMaker(MessageList.utils).getInt(bb);
     }
 
     public short getType() {
         byte[] bb = new byte[2];
         System.arraycopy(mBuffer, 11, bb, 0, 2);
-        return bytesToShort(bb);
+        return new MessageMaker(MessageList.utils).getShort(bb);
     }
 
     public void putByte(byte i) {
@@ -148,26 +149,18 @@ public class MessageMaker {
         correctSize(strSize + 4);
     }
 
-    public static String getString(byte[] data) {
+    public String getString(byte[] data) {
         ByteBuffer bb = ByteBuffer.allocate(data.length);
         bb.order(ByteOrder.LITTLE_ENDIAN);
         bb.put(data);
-        bb.position(0);
+        bb.position(mPosition);
         int sz;
         sz = bb.getInt();
+        mPosition += 4;
         byte[] strbuf = new byte[sz];
         bb.get(strbuf, 0, sz);
+        mPosition += sz;
         return new String(strbuf);
-    }
-
-    public static String getString(byte[] data, int offcet) {
-        ByteBuffer bb = ByteBuffer.allocate(4);
-        bb.order(ByteOrder.LITTLE_ENDIAN);
-        bb.put(data, offcet, 4);
-        bb.position(0);
-        int sz;
-        sz = bb.getInt();
-        return new String(data, offcet + 4, sz);
     }
 
     public void setPacketNumber() {
