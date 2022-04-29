@@ -54,10 +54,72 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/btnScancode"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llBack">
+        app:layout_constraintTop_toBottomOf="@id/llsizes">
 
         <requestFocus />
     </EditText>
+
+    <LinearLayout
+        android:id="@+id/llsizes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llBack">
+
+        <Button
+            android:id="@+id/btn34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="34" />
+
+        <Button
+            android:id="@+id/btn36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="36" />
+
+        <Button
+            android:id="@+id/btn38"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="38" />
+
+        <Button
+            android:id="@+id/btn40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="40" />
+
+        <Button
+            android:id="@+id/btn42"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="42" />
+
+        <Button
+            android:id="@+id/btn44"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="44" />
+
+        <Button
+            android:id="@+id/btn46"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="46" />
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/btnScancode"

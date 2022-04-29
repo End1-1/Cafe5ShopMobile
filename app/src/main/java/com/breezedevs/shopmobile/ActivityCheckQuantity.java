@@ -1,12 +1,11 @@
 package com.breezedevs.shopmobile;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Button;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -14,12 +13,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.breezedevs.shopmobile.databinding.ActivityCheckQuantityBinding;
 import com.breezedevs.shopmobile.databinding.ItemCheckQuantityBinding;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +35,13 @@ public class ActivityCheckQuantity extends ActivityClass {
         _b.edtScancode.setOnKeyListener(editListener);
         _b.txtName.setText(getString(R.string.name) + ": ?");
         _b.txtPrice.setText(getString(R.string.price) + ": ?");
+        _b.btn34.setOnClickListener(this);
+        _b.btn36.setOnClickListener(this);
+        _b.btn38.setOnClickListener(this);
+        _b.btn40.setOnClickListener(this);
+        _b.btn42.setOnClickListener(this);
+        _b.btn44.setOnClickListener(this);
+        _b.btn46.setOnClickListener(this);
         mDataAdapter = new DataAdapter();
         _b.rv.setLayoutManager(new GridLayoutManager(this, 1));
         _b.rv.setAdapter(mDataAdapter);
@@ -53,9 +57,17 @@ public class ActivityCheckQuantity extends ActivityClass {
             case R.id.btnScancode:
                 readScancode();
                 break;
+            case R.id.btn34:
+            case R.id.btn36:
+            case R.id.btn38:
+            case R.id.btn40:
+            case R.id.btn42:
+            case R.id.btn44:
+            case R.id.btn46:
+                replaceSize(((Button) view).getText().toString());
+            break;
         }
     }
-
 
     @Override
     protected void messageHandler(Intent intent) {
@@ -134,11 +146,21 @@ public class ActivityCheckQuantity extends ActivityClass {
         mCodeResult.launch(intent);
     }
 
+    private void replaceSize(String sz) {
+        String code = sz + _b.edtScancode.getText().toString().substring(2);
+        _b.edtScancode.setText(code);
+        checkQuantity();
+    }
+
     void checkQuantity() {
         String code = _b.edtScancode.getText().toString();
         if (code.isEmpty()) {
             return;
         }
+        mDataAdapter.data.clear();
+        mDataAdapter.notifyDataSetChanged();
+        _b.txtName.setText(getString(R.string.name) + ": ?");
+        _b.txtPrice.setText(getString(R.string.price) + ": ?");
         MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
         messageMaker.putString("rwshop");
         messageMaker.putString(Preference.getString("server_database"));
