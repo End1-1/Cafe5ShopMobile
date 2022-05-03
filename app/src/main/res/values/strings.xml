@@ -14,4 +14,12 @@
     <string name="scancode">scancode</string>
     <string name="name">name</string>
     <string name="price">price</string>
+    <string name="created">created</string>
+    <string name="end_date">end date</string>
+    <string name="apply">apply</string>
+    <string name="cancel">cancel</string>
+    <string name="save">save</string>
+    <string name="store">store</string>
+    <string name="current_qty">in stock</string>
+    <string name="reserved_qty">reservation</string>
 </resources>

@@ -7,23 +7,23 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-        android:id="@+id/txtStoreName"
     <TextView
-        ЗЗЗЗЗЗЗЗЗЗЗЗЗЗЗЗЗЗЗЗЗ=\
+        android:id="@+id/txtStoreName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="STORE NAME" />
 
-0/-------т/- пппп-е+ <TextView
-+-      android:id="@+id/txtReserved"
-+-      android:layout_width="40dp"
-+-      android:layout_height="wrap_content"
-+-      android:text="9999" />
-+-
-+-  <TextView
-+-      android:id="@+id/txtQty"
-+-      android:layout_width="40dp"
-+-      android:layout_height="wrap_content"
-.       android:text="9999" />
-    1ёLinearLayout>\\<уа>ёт ця23333334к
+    <TextView
+      android:id="@+id/txtReserved"
+      android:layout_width="40dp"
+      android:layout_height="wrap_content"
+      android:text="9999" />
+
+  <TextView
+      android:id="@+id/txtQty"
+      android:layout_width="40dp"
+      android:layout_height="wrap_content"
+       android:text="9999" />
+
+</LinearLayout>

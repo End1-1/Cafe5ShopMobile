@@ -13,4 +13,12 @@
     <string name="scancode">շտրիխ կոդ</string>
     <string name="name">անվանում</string>
     <string name="price">մանրածախ գին</string>
+    <string name="end_date">վերջնաժամկետ</string>
+    <string name="created">ստեղծված է</string>
+    <string name="apply">կիրառել</string>
+    <string name="cancel">հրաժարվել</string>
+    <string name="save">պահպանել</string>
+    <string name="store">պահեստ</string>
+    <string name="current_qty">առկա քանակ</string>
+    <string name="reserved_qty">ամրագրման քանակ</string>
 </resources>

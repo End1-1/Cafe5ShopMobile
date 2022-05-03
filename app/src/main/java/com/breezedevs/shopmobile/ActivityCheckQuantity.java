@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.breezedevs.shopmobile.databinding.ActivityCheckQuantityBinding;
 import com.breezedevs.shopmobile.databinding.ItemCheckQuantityBinding;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -212,9 +213,18 @@ public class ActivityCheckQuantity extends ActivityClass {
         public int goods;
     }
 
-    private class DataAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private class DataAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
         public List<OneRow> data = new ArrayList<>();
+        private DecimalFormat format = new DecimalFormat("0.#");
+
+        @Override
+        public void onClick(View view) {
+            int pos = _b.rv.getChildAdapterPosition(view);
+            Intent reserveIntent = new Intent(ActivityCheckQuantity.this, ActivityReserve.class);
+            startActivity(reserveIntent);
+            System.out.println(pos);
+        }
 
         private class VH extends RecyclerView.ViewHolder {
             private ItemCheckQuantityBinding _i;
@@ -222,13 +232,14 @@ public class ActivityCheckQuantity extends ActivityClass {
             public VH(ItemCheckQuantityBinding i) {
                 super(i.getRoot());
                 _i = i;
+                _i.getRoot().setOnClickListener(DataAdapter.this);
             }
 
             public void bind(int index) {
                 OneRow or = data.get(index);
                 _i.txtStoreName.setText(or.storeName);
-                _i.txtQty.setText(String.valueOf(or.qty));
-                _i.txtReserved.setText(String.valueOf(or.reserveQty));
+                _i.txtQty.setText(format.format(or.qty));
+                _i.txtReserved.setText(format.format(or.reserveQty));
             }
         }
 
