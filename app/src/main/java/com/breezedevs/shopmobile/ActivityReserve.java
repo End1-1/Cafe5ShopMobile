@@ -1,5 +1,6 @@
 package com.breezedevs.shopmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +9,7 @@ import android.widget.DatePicker;
 
 import com.breezedevs.shopmobile.databinding.ActivityReserveBinding;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,6 +17,7 @@ import java.util.GregorianCalendar;
 public class ActivityReserve extends ActivityClass {
 
     private ActivityReserveBinding _b;
+    private GoodsQtyClass mGoodsQtyClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,16 @@ public class ActivityReserve extends ActivityClass {
         _b.txtDateCreated.setText(String.format("%02d/%02d/%d", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR)));
         _b.txtDateFor.setText(String.format("%02d/%02d/%d", calendar.get(Calendar.DAY_OF_MONTH) , calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR)));
         mViewExpandCollapse.collapseMenu(_b.clDateFor);
+        GoodsQtyClass qtyClass = (GoodsQtyClass) getIntent().getSerializableExtra("goods");
+        if (qtyClass == null) {
+            finish();
+        }
+        mGoodsQtyClass = qtyClass;
+        DecimalFormat format = new DecimalFormat("0.#");
+        _b.txtGoodsName.setText(qtyClass.goodsName);
+        _b.txtScancode.setText(qtyClass.scancode);
+        _b.txtReserveStoreName.setText(qtyClass.storeName);
+        _b.txtInStock.setText(format.format(qtyClass.qty - qtyClass.reserveQty));
         setContentView(_b.getRoot());
     }
 
@@ -90,7 +103,50 @@ public class ActivityReserve extends ActivityClass {
     }
 
     private void save() {
+        if (_b.edtQty.getText().toString().isEmpty()) {
+            return;
+        }
+        if (Double.valueOf(_b.edtQty.getText().toString()) < 0.01) {
+            return;
+        }
+        MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
+        messageMaker.putString("rwshop");
+        messageMaker.putString(Preference.getString("server_database"));
+        messageMaker.putByte((byte) 4);
+        messageMaker.putString(_b.txtDateFor.getText().toString());
+        messageMaker.putInteger(mGoodsQtyClass.goods);
+        messageMaker.putInteger(mGoodsQtyClass.store);
+        messageMaker.putInteger(Integer.valueOf(Preference.getString("server_storecode")));
+        messageMaker.putDouble(Double.valueOf(_b.edtQty.getText().toString()));
+        messageMaker.putString(_b.edtMsg.getText().toString());
+        messageMaker.putString(mGoodsQtyClass.goodsName);
+        messageMaker.putString(mGoodsQtyClass.scancode);
+        messageMaker.putString(mGoodsQtyClass.unit);
+        sendMessage(messageMaker);
+    }
 
+    @Override
+    protected void messageHandler(Intent intent) {
+        if (intent.getBooleanExtra(MessageMaker.NETWORK_ERROR, false)) {
+            return;
+        }
+        switch (intent.getShortExtra("type", (short) 0)) {
+            case MessageList.dll_op:
+                byte[] data = intent.getByteArrayExtra("data");
+                MessageMaker mm = new MessageMaker(MessageList.utils);
+                byte op = mm.getByte(data);
+                switch (op) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        System.out.println("ERROR");
+                        break;
+                    case 4:
+                        finish();
+                        break;
+                }
+                break;
+        }
     }
 
     private TextWatcher mQtyWatcher = new TextWatcher() {

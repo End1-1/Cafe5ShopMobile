@@ -22,4 +22,5 @@
     <string name="current_qty">առկա քանակ</string>
     <string name="reserved_qty">ամրագրման քանակ</string>
     <string name="additional_information">լրացուցիչ տեղեկություններ</string>
+    <string name="store_id">պահեստի կոդ</string>
 </resources>

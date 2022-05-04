@@ -61,9 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:text="@string/server_address"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/llBack" />
+                android:text="@string/server_address" />
 
             <EditText
                 android:id="@+id/edtServerAddress"
@@ -75,10 +73,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                android:text="Name"/>
 
             <TextView
                 android:id="@+id/textView2"
@@ -86,9 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/server_port"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtServerAddress" />
+                android:text="@string/server_port" />
 
             <EditText
                 android:id="@+id/edtServerPort"
@@ -100,10 +93,7 @@
                 android:ems="10"
                 android:inputType="number"
                 android:minHeight="48dp"
-                android:text="Name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                android:text="Name" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -111,9 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/username"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtServerPort" />
+                android:text="@string/username" />
 
             <EditText
                 android:id="@+id/edtUsername"
@@ -125,10 +113,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                android:text="Name" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -136,9 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/password"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtUsername" />
+                android:text="@string/password"/>
 
             <EditText
                 android:id="@+id/edtPassword"
@@ -150,10 +133,7 @@
                 android:ems="10"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
-                android:text="Name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                android:text="Name" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -161,9 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/database"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
+                android:text="@string/database" />
 
             <EditText
                 android:id="@+id/edtDatabase"
@@ -175,10 +153,28 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/store_id" />
+
+            <EditText
+                android:id="@+id/edtStoreCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:minHeight="48dp"
+                android:text="Name" />
 
             <LinearLayout
                 android:layout_width="match_parent"

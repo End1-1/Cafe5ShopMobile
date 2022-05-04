@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.breezedevs.shopmobile.databinding.ActivityCheckQuantityBinding;
 import com.breezedevs.shopmobile.databinding.ItemCheckQuantityBinding;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,14 @@ public class ActivityCheckQuantity extends ActivityClass {
         _b.rv.setLayoutManager(new GridLayoutManager(this, 1));
         _b.rv.setAdapter(mDataAdapter);
         setContentView(_b.getRoot());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (_b.edtScancode.getText().toString().isEmpty() == false) {
+            checkQuantity();
+        }
     }
 
     @Override
@@ -114,7 +123,7 @@ public class ActivityCheckQuantity extends ActivityClass {
                         }
                         for (int r = 0; r < rowCount; r++) {
                             mm.mPosition = dataMap[(r * columnCount) + 0];
-                            OneRow or = new OneRow();
+                            GoodsQtyClass or = new GoodsQtyClass();
                             or.storeName = mm.getString(data);
                             or.goodsName = mm.getString(data);
                             or.scancode = mm.getString(data);
@@ -129,7 +138,7 @@ public class ActivityCheckQuantity extends ActivityClass {
                         }
                         mDataAdapter.notifyDataSetChanged();
                         if (mDataAdapter.data.size() > 0) {
-                            OneRow or = mDataAdapter.data.get(0);
+                            GoodsQtyClass or = mDataAdapter.data.get(0);
                             _b.txtName.setText(getString(R.string.name) + ": " + or.goodsName);
                             _b.txtPrice.setText(getString(R.string.price) + ": " + String.valueOf(or.retailPrice));
                         } else {
@@ -200,28 +209,17 @@ public class ActivityCheckQuantity extends ActivityClass {
         }
     };
 
-    private class OneRow {
-        public String storeName;
-        public String goodsName;
-        public String scancode;
-        public String unit;
-        public double qty;
-        public double reserveQty;
-        public double retailPrice;
-        public double whosalePrice;
-        public int store;
-        public int goods;
-    }
-
     private class DataAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
-        public List<OneRow> data = new ArrayList<>();
+        public List<GoodsQtyClass> data = new ArrayList<>();
         private DecimalFormat format = new DecimalFormat("0.#");
 
         @Override
         public void onClick(View view) {
             int pos = _b.rv.getChildAdapterPosition(view);
+            GoodsQtyClass oneRow = data.get(pos);
             Intent reserveIntent = new Intent(ActivityCheckQuantity.this, ActivityReserve.class);
+            reserveIntent.putExtra("goods", oneRow);
             startActivity(reserveIntent);
             System.out.println(pos);
         }
@@ -236,7 +234,7 @@ public class ActivityCheckQuantity extends ActivityClass {
             }
 
             public void bind(int index) {
-                OneRow or = data.get(index);
+                GoodsQtyClass or = data.get(index);
                 _i.txtStoreName.setText(or.storeName);
                 _i.txtQty.setText(format.format(or.qty));
                 _i.txtReserved.setText(format.format(or.reserveQty));

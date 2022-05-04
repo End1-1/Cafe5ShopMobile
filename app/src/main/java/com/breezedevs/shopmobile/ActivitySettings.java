@@ -31,6 +31,7 @@ public class ActivitySettings extends ActivityClass {
         _b.edtUsername.setText(Preference.getString("server_username"));
         _b.edtPassword.setText(Preference.getString("server_password"));
         _b.edtDatabase.setText(Preference.getString("server_database"));
+        _b.edtStoreCode.setText(Preference.getString("server_storecode"));
     }
 
     @Override
@@ -41,6 +42,7 @@ public class ActivitySettings extends ActivityClass {
         Preference.setString("server_username", _b.edtUsername.getText().toString());
         Preference.setString("server_password", _b.edtPassword.getText().toString());
         Preference.setString("server_database", _b.edtDatabase.getText().toString());
+        Preference.setString("server_storecode", _b.edtStoreCode.getText().toString());
     }
 
     @Override
@@ -69,12 +71,13 @@ public class ActivitySettings extends ActivityClass {
                     }
                     String code = activityResult.getData().getStringExtra("code");
                     List<String> params = Arrays.asList(code.split(";"));
-                    if (params.size() == 5) {
+                    if (params.size() == 6) {
                         _b.edtServerAddress.setText(params.get(0));
                         _b.edtServerPort.setText(params.get(1));
                         _b.edtUsername.setText(params.get(2));
                         _b.edtPassword.setText(params.get(3));
                         _b.edtDatabase.setText(params.get(4));
+                        _b.edtStoreCode.setText(params.get(5));
                     }
                 }
             });
