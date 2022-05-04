@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 public class ViewExpandCollapse {
 
     public interface ViewExpandCollapseListener {
+        void beforeExpand();
+        void beforeCollapse();
         void expanded(int id);
         void collapsed(int id);
     }
@@ -22,6 +24,9 @@ public class ViewExpandCollapse {
     }
 
     protected void expandMenu(final View v) {
+        if (mViewExpandCollapseListener != null) {
+            mViewExpandCollapseListener.beforeExpand();
+        }
         //v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         v.measure(LinearLayout.LayoutParams.MATCH_PARENT, View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         final int h = v.getMeasuredHeight();
@@ -50,6 +55,9 @@ public class ViewExpandCollapse {
     }
 
     protected void collapseMenu(final View v) {
+        if (mViewExpandCollapseListener != null) {
+            mViewExpandCollapseListener.beforeCollapse();
+        }
         final int h = 1;
 
         ValueAnimator anim = ValueAnimator.ofInt(v.getMeasuredHeight(), h);

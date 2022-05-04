@@ -24,6 +24,6 @@
       android:id="@+id/txtQty"
       android:layout_width="40dp"
       android:layout_height="wrap_content"
-       android:text="9999" />
+      android:text="9999" />
 
 </LinearLayout>

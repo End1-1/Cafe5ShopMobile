@@ -183,7 +183,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/txtInStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -214,6 +214,7 @@
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:lines="2"
+        android:hint="@string/additional_information"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtQty" />
