@@ -35,6 +35,7 @@ public class ActivityReserve extends ActivityClass {
         _b.dateReserveFor.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), null);
         _b.dateReserveFor.setMinDate(date.getTime());
         _b.txtDateCreated.setText(String.format("%02d/%02d/%d", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR)));
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
         _b.txtDateFor.setText(String.format("%02d/%02d/%d", calendar.get(Calendar.DAY_OF_MONTH) , calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR)));
         mViewExpandCollapse.collapseMenu(_b.clDateFor);
         GoodsQtyClass qtyClass = (GoodsQtyClass) getIntent().getSerializableExtra("goods");
