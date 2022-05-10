@@ -229,7 +229,7 @@ public class ActivityCheckQuantity extends ActivityClass {
                 }
             });
 
-    View.OnKeyListener editListener = new View.OnKeyListener() {
+    private View.OnKeyListener editListener = new View.OnKeyListener() {
         @Override
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if (keyEvent.getAction() == KeyEvent.ACTION_UP) {

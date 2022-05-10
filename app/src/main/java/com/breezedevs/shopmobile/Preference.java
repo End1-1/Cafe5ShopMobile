@@ -4,12 +4,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public final class Preference {
 
     private static final String prefName  = "com.breezedevs.shopmobile";
+    private static final DecimalFormat format = new DecimalFormat("0.#");
+
+    public static String formatDouble(double v) {
+        return format.format(v);
+    }
 
     private static SharedPreferences pref(Context context) {
         return context.getSharedPreferences(prefName, Context.MODE_PRIVATE);

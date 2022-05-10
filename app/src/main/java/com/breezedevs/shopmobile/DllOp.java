@@ -7,6 +7,9 @@ public class DllOp {
     public static final byte op_data_list = 6;
     public static final byte op_image = 7;
     public static final byte op_documents_list = 8;
+    public static final byte op_open_document = 9;
+    public static final byte op_add_goods_to_document = 10;
+    public static final byte op_open_body = 11;
 
     public static final byte list_storages = 1;
 }

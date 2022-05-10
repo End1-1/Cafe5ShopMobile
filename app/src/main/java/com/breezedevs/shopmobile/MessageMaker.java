@@ -190,11 +190,12 @@ public class MessageMaker {
     }
 
     public int send() {
-        Intent intent = new Intent(BROADCAST_DATA);
+        Intent intent = new Intent(App.getContext(), AppService.class);
         intent.putExtra("socket", true);
         intent.putExtra("data", mBuffer);
-        LocalBroadcastManager.getInstance(App.getContext()).sendBroadcast(intent);
-        System.out.println(String.format("Message send: %d", mMessageType));
+        App.getContext().startService(intent);
+        System.out.println(String.format("SEND TIMEEEE %d", System.currentTimeMillis() - Preference.getLong("op_doc")));
+        //LocalBroadcastManager.getInstance(App.getContext()).sendBroadcast(intent);
         return mMessageId;
     }
 }

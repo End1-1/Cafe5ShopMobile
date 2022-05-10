@@ -37,7 +37,7 @@ public class ServiceSocket {
     private SocketThread mSocketThread;
     private boolean mStopped = false;
     private boolean mConnected = false;
-    private BlockingDeque<byte[]> mMessageBuffer = new LinkedBlockingDeque<>();
+    public BlockingDeque<byte[]> mMessageBuffer = new LinkedBlockingDeque<>();
 
     public ServiceSocket() {
         LocalBroadcastManager.getInstance(App.getContext()).registerReceiver(mReceiver, new IntentFilter(MessageMaker.BROADCAST_DATA));
@@ -231,6 +231,7 @@ public class ServiceSocket {
     }
 
     private void parseData(short msgType, int msgNum, int msgId, byte[] data) {
+        long meas = System.currentTimeMillis();
         Intent intent = new Intent(MessageMaker.BROADCAST_DATA);
         intent.putExtra("local", true);
         intent.putExtra("type", msgType);
@@ -243,7 +244,6 @@ public class ServiceSocket {
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            System.out.println(String.format("ServiceSocket message: %d", intent.getShortExtra("type", (short) 0)));
             if (intent.getBooleanExtra("local", false)) {
                 switch (intent.getShortExtra("type", (short) 0)) {
                     case MessageList.check_connection:
