@@ -30,6 +30,8 @@ public class FragmentMenu extends FragmentClass {
                 startActivity(intentCheckQuantity);
                 break;
             case R.id.lltransfertooffice:
+                Intent intentDocuments = new Intent(getContext(), ActivityDocument.class);
+                startActivity(intentDocuments);
                 break;
         }
     }

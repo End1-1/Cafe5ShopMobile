@@ -23,4 +23,19 @@
     <string name="reserved_qty">ամրագրման քանակ</string>
     <string name="additional_information">լրացուցիչ տեղեկություններ</string>
     <string name="store_id">պահեստի կոդ</string>
+    <string name="documents">փաստաթղթեր</string>
+    <string name="create">ստեղծել</string>
+    <string name="image">նկար</string>
+    <string name="create_document">նոր փաստաթուղթ</string>
+    <string name="edit_document">խմբագրել փաստաթուղթը</string>
+    <string name="store_input">մուտքի պահեստ</string>
+    <string name="store_output">ելքի պահեստ</string>
+    <string name="store_input_document">պահեստի մուտքի փաստաթուղթ</string>
+    <string name="store_output_document">պահեստի ելքի փաստաթուղթ</string>
+    <string name="store_movement_document">պահեստի տեղաշարժի փաստաթուղթ</string>
+    <string name="close">փակել</string>
+    <string name="image_not_exists">նկարը բացակայում է</string>
+    <string name="invalid_doc_type">անթուլատրելի փաստաթղթի տեսակ</string>
+    <string name="network_error">կապի սխալ</string>
+    <string name="get_data">տվյալների բեռնում</string>
 </resources>

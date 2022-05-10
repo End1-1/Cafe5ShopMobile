@@ -6,13 +6,21 @@
         <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/drawable-v24/menubg2.xml" value="0.2995" />
         <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_check_quantity.xml" value="0.9" />
         <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_code_reader.xml" value="0.8770833333333333" />
-        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_main.xml" value="1.1569767441860466" />
+        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_document.xml" value="1.1" />
+        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_edit_document.xml" value="1.0" />
+        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_image.xml" value="0.6104166666666667" />
+        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_main.xml" value="0.7936507936507936" />
+        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_progress_dialog_class.xml" value="0.6104166666666667" />
         <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_reserve.xml" value="0.8" />
         <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_settings.xml" value="1.0" />
         <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/activity_transfer_to_office.xml" value="0.6208333333333333" />
+        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/dialog_class_error_ok.xml" value="0.5541666666666667" />
+        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/fragment_blank.xml" value="0.8333333333333334" />
         <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/fragment_connecting_to_server.xml" value="1.1569767441860466" />
         <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/fragment_menu.xml" value="1.1569767441860466" />
         <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/item_check_quantity.xml" value="1.0" />
+        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/item_document_list.xml" value="0.8916666666666667" />
+        <entry key="..\:/Projects/Cafe5ShopMobile/app/src/main/res/layout/spinner_storages.xml" value="0.8386627906976745" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MyApplication/app/src/main/res/drawable-v24/menubg2.xml" value="0.1595" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_settings.xml" value="0.33" />

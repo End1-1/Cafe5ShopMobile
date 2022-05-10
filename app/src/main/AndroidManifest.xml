@@ -22,6 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShopMobile">
         <activity
+            android:name=".ActivityEditDocument"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityImage"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityDocument"
+            android:exported="false" />
+        <activity
             android:name=".ActivityReserve"
             android:exported="false" />
         <activity

@@ -85,7 +85,7 @@ public class ActivityMain extends ActivityClass {
     protected void messageHandler(Intent intent) {
         switch (intent.getShortExtra("type", (short) 0)) {
             case MessageList.connection:
-                replaceFragment(new FragmentConnectingToServer());
+                replaceFragment(FragmentConnectingToServer.create(getString(R.string.connecting_to_server)));
                 if (intent.getBooleanExtra("value", false)) {
                     _b.imgStatus.setImageDrawable(getDrawable(R.drawable.wifib));
                 } else {
@@ -98,17 +98,40 @@ public class ActivityMain extends ActivityClass {
                     replaceFragment(new FragmentMenu());
                 } else {
                     _b.imgStatus.setImageDrawable(getDrawable(R.drawable.wifib));
-                    replaceFragment(new FragmentConnectingToServer());
+                    replaceFragment(FragmentConnectingToServer.create(getString(R.string.connecting_to_server)));
                 }
                 break;
             case MessageList.silent_auth:
                 if (intent.getIntExtra("login_status", 0) == 0) {
                     _b.imgStatus.setImageDrawable(getDrawable(R.drawable.wifib));
-                    replaceFragment(new FragmentConnectingToServer());
+                    replaceFragment(FragmentConnectingToServer.create(getString(R.string.connecting_to_server)));
                 } else {
                     _b.imgStatus.setImageDrawable(getDrawable(R.drawable.wifi_on));
-                    replaceFragment(new FragmentMenu());
+                    getData();
                 }
+                break;
+            case MessageList.dll_op:
+                byte[] data = intent.getByteArrayExtra("data");
+                MessageMaker mm = new MessageMaker(MessageList.utils);
+                byte op = mm.getByte(data);
+                switch (op) {
+                    case DllOp.op_data_list:
+                        byte lst = mm.getByte(data);
+                        switch (lst) {
+                            case DllOp.list_storages:
+                                int rowcount = mm.getInt(data);
+                                DataClass.mStorages.clear();
+                                for (int i = 0; i < rowcount; i++) {
+                                    DataClass.DataStore ds = new DataClass.DataStore();
+                                    ds.id = mm.getInt(data);
+                                    ds.name = mm.getString(data);
+                                    DataClass.mStorages.add(ds);
+                                }
+                                break;
+                        }
+                        break;
+                }
+                replaceFragment(new FragmentMenu());
                 break;
         }
     }
@@ -116,5 +139,15 @@ public class ActivityMain extends ActivityClass {
     private void openConfig() {
         Intent intent = new Intent(this, ActivitySettings.class);
         startActivity(intent);
+    }
+
+    private void getData() {
+        replaceFragment(FragmentConnectingToServer.create(getString(R.string.get_data)));
+        MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
+        messageMaker.putString("rwshop");
+        messageMaker.putString(Preference.getString("server_database"));
+        messageMaker.putByte(DllOp.op_data_list);
+        messageMaker.putByte(DllOp.list_storages);
+        sendMessage(messageMaker);
     }
 }

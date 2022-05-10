@@ -29,16 +29,17 @@ public class ActivityClass extends AppCompatActivity implements View.OnClickList
 
     protected int mMessageId;
     protected NetworkTimerTask mTimerTask;
+    private ProgressDialogClass mProgressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Locale locale = new Locale("hy");
         Locale.setDefault(locale);
         Resources resources = getResources();
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -56,6 +57,20 @@ public class ActivityClass extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
+    }
+
+    protected void createProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialogClass(this);
+            mProgressDialog.show();
+        }
+    }
+
+    protected void dismissProgressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+            mProgressDialog = null;
+        }
     }
 
     protected void sendMessage(MessageMaker mm) {
@@ -108,7 +123,7 @@ public class ActivityClass extends AppCompatActivity implements View.OnClickList
     protected BroadcastReceiver mSocketData = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            System.out.println(String.format("Activity message: %d", intent.getShortExtra("type", (short) 0)));
+            System.out.println(String.format("Activity message: %d, message id and timer task message id: %d - %d", intent.getShortExtra("type", (short) 0), mMessageId, mTimerTask == null ? 0 : mTimerTask.mMessage.getMessageId()));
             if (mTimerTask != null) {
                 if (intent.getBooleanExtra(MessageMaker.NETWORK_ERROR, false)) {
                     mTimerTask.cancel();

@@ -34,7 +34,7 @@
             android:text="@string/back" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -52,7 +52,7 @@
         android:ems="10"
         android:hint="@string/scancode"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/btnScancode"
+        app:layout_constraintEnd_toStartOf="@+id/btnShowImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llsizes">
 
@@ -126,10 +126,23 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="@+id/edtScancode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/edtScancode"
         app:srcCompat="@drawable/qr_code" />
+
+    <ImageButton
+        android:id="@+id/btnShowImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/edtScancode"
+        app:layout_constraintEnd_toStartOf="@+id/btnScancode"
+        app:layout_constraintTop_toTopOf="@+id/edtScancode"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/image" />
 
     <TextView
         android:id="@+id/txtName"

@@ -21,6 +21,7 @@ import com.breezedevs.shopmobile.databinding.ItemCheckQuantityBinding;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ActivityCheckQuantity extends ActivityClass {
@@ -34,6 +35,7 @@ public class ActivityCheckQuantity extends ActivityClass {
         _b = ActivityCheckQuantityBinding.inflate(getLayoutInflater());
         _b.llBack.setOnClickListener(this);
         _b.btnScancode.setOnClickListener(this);
+        _b.btnShowImage.setOnClickListener(this);
         _b.edtScancode.setOnKeyListener(editListener);
         _b.txtName.setText(getString(R.string.name) + ": ?");
         _b.txtPrice.setText(getString(R.string.price) + ": ?");
@@ -76,12 +78,27 @@ public class ActivityCheckQuantity extends ActivityClass {
             case R.id.btn46:
                 replaceSize(((Button) view).getText().toString());
             break;
+            case R.id.btnShowImage:
+                String scancode = _b.edtScancode.getText().toString();
+                if (scancode.isEmpty()) {
+                    return;
+                }
+                createProgressDialog();
+                MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
+                messageMaker.putString("rwshop");
+                messageMaker.putString(Preference.getString("server_database"));
+                messageMaker.putByte(DllOp.op_image);
+                messageMaker.putString(scancode);
+                sendMessage(messageMaker);
+                break;
         }
     }
 
     @Override
     protected void messageHandler(Intent intent) {
+        dismissProgressDialog();
         if (intent.getBooleanExtra(MessageMaker.NETWORK_ERROR, false)) {
+            DialogClass.error(this, getString(R.string.network_error));
             return;
         }
         switch (intent.getShortExtra("type", (short) 0)) {
@@ -93,9 +110,9 @@ public class ActivityCheckQuantity extends ActivityClass {
                     case 0:
                     case 1:
                     case 2:
-                        System.out.println("ERROR");
+                        DialogClass.error(this, mm.getString(data));
                         break;
-                    case 3:
+                    case DllOp.op_check_quantity:
                         byte columnCount = mm.getByte(data);
                         int rowCount = mm.getInt(data);
                         //Types
@@ -146,6 +163,18 @@ public class ActivityCheckQuantity extends ActivityClass {
                             _b.txtPrice.setText(getString(R.string.price) + ": ?");
                         }
                         break;
+                    case DllOp.op_image:
+                        byte img = mm.getByte(data);
+                        if (img == 0) {
+                            DialogClass.error(this, getString(R.string.image_not_exists));
+                        } else {
+                            String scancode = mm.getString(data);
+                            String name = mm.getString(data);
+                            Intent intentImage = new Intent(this, ActivityImage.class);
+                            intentImage.putExtra("image", mm.getBytes(data));
+                            intentImage.putExtra("name", name + " " + scancode);
+                            startActivity(intentImage);
+                        }
                 }
                 break;
         }
@@ -157,7 +186,11 @@ public class ActivityCheckQuantity extends ActivityClass {
     }
 
     private void replaceSize(String sz) {
-        String code = sz + _b.edtScancode.getText().toString().substring(2);
+        String str = _b.edtScancode.getText().toString();
+        if (str.length() < 2) {
+            return;
+        }
+        String code = sz + str.substring(2);
         _b.edtScancode.setText(code);
         checkQuantity();
     }
@@ -167,6 +200,7 @@ public class ActivityCheckQuantity extends ActivityClass {
         if (code.isEmpty()) {
             return;
         }
+        createProgressDialog();
         mDataAdapter.data.clear();
         mDataAdapter.notifyDataSetChanged();
         _b.txtName.setText(getString(R.string.name) + ": ?");

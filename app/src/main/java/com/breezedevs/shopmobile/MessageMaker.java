@@ -16,7 +16,7 @@ public class MessageMaker {
     public byte[] mBuffer;
     public static int mMessageNumber = 1;
     private static int mMessageIdCounter = 1;
-    public static int mMessageId = 0;
+    public int mMessageId = 0;
     private static short mMessageType = 0;
     public int mPosition = 0;
 
@@ -161,6 +161,19 @@ public class MessageMaker {
         bb.get(strbuf, 0, sz);
         mPosition += sz;
         return new String(strbuf);
+    }
+
+    public byte[] getBytes(byte[] data) {
+        ByteBuffer bb = ByteBuffer.allocate(data.length);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.put(data);
+        bb.position(mPosition);
+        int sz = bb.getInt();
+        mPosition += 4;
+        byte[] buf = new byte[sz];
+        bb.get(buf, 0, sz);
+        mPosition += sz;
+        return buf;
     }
 
     public void setPacketNumber() {
