@@ -48,12 +48,6 @@ public class AppService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getBooleanExtra("socket", false)) {
-            System.out.println(String.format("1 SERVICE RECEIVED TIMEEEE %d", System.currentTimeMillis() - Preference.getLong("op_doc")));
-            mSocketService.mMessageBuffer.add(intent.getByteArrayExtra("data"));
-            System.out.println(String.format("2 SERVICE RECEIVED TIMEEEE %d", System.currentTimeMillis() - Preference.getLong("op_doc")));
-            return super.onStartCommand(intent, flags, startId);
-        }
         mSocketService = new ServiceSocket();
         mSocketService.startSocketThread();
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(MessageMaker.BROADCAST_DATA));

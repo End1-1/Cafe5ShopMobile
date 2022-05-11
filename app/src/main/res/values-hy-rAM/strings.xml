@@ -38,4 +38,7 @@
     <string name="invalid_doc_type">անթուլատրելի փաստաթղթի տեսակ</string>
     <string name="network_error">կապի սխալ</string>
     <string name="get_data">տվյալների բեռնում</string>
+    <string name="yes">այո</string>
+    <string name="no">ոչ</string>
+    <string name="confirm_to_delete">հաստատեք հեռացումը</string>
 </resources>

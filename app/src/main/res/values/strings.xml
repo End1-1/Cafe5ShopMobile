@@ -40,5 +40,7 @@
     <string name="network_error">network error</string>
     <string name="get_data">get data</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="confirm_to_delete">confirm to delete</string>
 </resources>

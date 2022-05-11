@@ -3,10 +3,12 @@ package com.breezedevs.shopmobile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -52,6 +54,28 @@ public class ActivityEditDocument extends ActivityClass {
         StoreSpinnerAdapter adapter = new StoreSpinnerAdapter(this, R.layout.spinner_storages);
         _b.spStoreInput.setAdapter(adapter);
         _b.spStoreOutput.setAdapter(adapter);
+        _b.spStoreInput.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                updateDocument();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        _b.spStoreOutput.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                updateDocument();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         if (getIntent().getBooleanExtra("new", false)) {
             _b.txtTitle.setText(getString(R.string.create_document));
         }
@@ -67,7 +91,6 @@ public class ActivityEditDocument extends ActivityClass {
     protected void onStart() {
         super.onStart();
         if (!mDocId.isEmpty()) {
-            Preference.setLong("op_doc", System.currentTimeMillis());
             createProgressDialog();
             MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
             messageMaker.putString("rwshop");
@@ -150,7 +173,6 @@ public class ActivityEditDocument extends ActivityClass {
                         messageMaker.putByte(DllOp.op_open_body);
                         messageMaker.putString(mDocId);
                         sendMessage(messageMaker);
-                        System.out.println(String.format("finish TIMEEEE %d", System.currentTimeMillis() - Preference.getLong("op_doc")));
                         break;
                     case DllOp.op_open_body:
                         success = mm.getByte(data);
@@ -174,6 +196,7 @@ public class ActivityEditDocument extends ActivityClass {
                         break;
                     case DllOp.op_add_goods_to_document:
                         success = mm.getByte(data);
+                        _b.editScancode.setText("");
                         if (success == 0) {
                             String error = mm.getString(data);
                             DialogClass.error(this, error);
@@ -187,6 +210,30 @@ public class ActivityEditDocument extends ActivityClass {
                         mDocAdapter.mGoods.add(0, gr);
                         mDocAdapter.notifyDataSetChanged();
                         break;
+                    case DllOp.op_remove_goods_from_document:
+                        success = mm.getByte(data);
+                        if (success == 0) {
+                            String error = mm.getString(data);
+                            DialogClass.error(this, error);
+                            return;
+                        }
+                        String rowId = mm.getString(data);
+                        for (int i = 0; i < mDocAdapter.mGoods.size(); i++) {
+                            if ( mDocAdapter.mGoods.get(i).rowId.equals(rowId)) {
+                                mDocAdapter.mRowIndex = -1;
+                                mDocAdapter.mGoods.remove(i);
+                                mDocAdapter.notifyDataSetChanged();
+                                return;
+                            }
+                        }
+                        break;
+                    case DllOp.op_update_document:
+                        success = mm.getByte(data);
+                        if (success == 0) {
+                            String error = mm.getString(data);
+                            DialogClass.error(this, error);
+                            return;
+                        }
                 }
                 break;
         }
@@ -228,6 +275,20 @@ public class ActivityEditDocument extends ActivityClass {
         messageMaker.putString(scancode);
         messageMaker.putDouble(1);
         messageMaker.putDouble(0);
+        sendMessage(messageMaker);
+    }
+
+    private void updateDocument() {
+        createProgressDialog();
+        MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
+        messageMaker.putString("rwshop");
+        messageMaker.putString(Preference.getString("server_database"));
+        messageMaker.putByte(DllOp.op_update_document);
+        messageMaker.putString(mDocId);
+        int index = _b.spStoreInput.getSelectedItemPosition();
+        messageMaker.putInteger(DataClass.mStorages.get(index).id);
+        index = _b.spStoreOutput.getSelectedItemPosition();
+        messageMaker.putInteger(DataClass.mStorages.get(index).id);
         sendMessage(messageMaker);
     }
 
@@ -347,18 +408,21 @@ public class ActivityEditDocument extends ActivityClass {
     private class DocAdapter extends RecyclerView.Adapter {
 
         public List<GoodsRow> mGoods;
+        private int mRowIndex = -1;
 
         public DocAdapter() {
             mGoods = new ArrayList();
         }
 
-        private class VH extends RecyclerView.ViewHolder {
+        private class VH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             private ItemDocumentGoodsBinding _i;
 
             public VH(ItemDocumentGoodsBinding i) {
                 super(i.getRoot());
                 _i = i;
+                _i.getRoot().setOnClickListener(this);
+                _i.btnRemove.setOnClickListener(this);
             }
 
             public void onBind(int position) {
@@ -366,6 +430,43 @@ public class ActivityEditDocument extends ActivityClass {
                 _i.txtGoodsName.setText(gr.goodsName);
                 _i.txtScancode.setText(gr.scancode);
                 _i.txtQty.setText(Preference.formatDouble(gr.qty));
+                if (mRowIndex == position) {
+                    _i.getRoot().setBackgroundColor(getColor(R.color.lightblue));
+                    _i.btnRemove.setVisibility(View.VISIBLE);
+                } else {
+                    _i.getRoot().setBackgroundColor(getColor(R.color.white));
+                    _i.btnRemove.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.btnRemove:
+                        DialogClass.question(ActivityEditDocument.this, getString(R.string.confirm_to_delete), new DialogClass.DialogYesNo() {
+                            @Override
+                            public void yes() {
+                                GoodsRow gr = mGoods.get(getAdapterPosition());
+                                createProgressDialog();
+                                MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
+                                messageMaker.putString("rwshop");
+                                messageMaker.putString(Preference.getString("server_database"));
+                                messageMaker.putByte(DllOp.op_remove_goods_from_document);
+                                messageMaker.putString(gr.rowId);
+                                sendMessage(messageMaker);
+                            }
+
+                            @Override
+                            public void no() {
+
+                            }
+                        });
+                        break;
+                    default:
+                        mRowIndex = getAdapterPosition();
+                        notifyDataSetChanged();
+                        break;
+                }
             }
         }
 

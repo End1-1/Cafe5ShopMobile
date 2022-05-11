@@ -156,7 +156,6 @@ public class ServiceSocket {
             do {
                 try {
                     while (mMessageBuffer.size() > 0) {
-                        System.out.println(String.format("1 SENDED TIMEEEE %d", System.currentTimeMillis() - Preference.getLong("op_doc")));
                         ByteBuffer msgNumberBytes = ByteBuffer.allocate(4);
                         msgNumberBytes.order(ByteOrder.LITTLE_ENDIAN);
                         msgNumberBytes.putInt(MessageMaker.getMessageNumber()).array();
@@ -166,7 +165,6 @@ public class ServiceSocket {
                         }
                         mOutputStream.write(msg);
                         mOutputStream.flush();
-                        System.out.println(String.format("2 SENDED TIMEEEE %d", System.currentTimeMillis() - Preference.getLong("op_doc")));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -213,7 +211,6 @@ public class ServiceSocket {
                         mBufferPos += br;
                         if (mBytesLeft == 0) {
                             parseData(msgType, msgNum, msgId, mBuffer);
-                            System.out.println(String.format("PARSINGTIMEEEE %d", System.currentTimeMillis() - Preference.getLong("op_doc")));
                         }
                     }
                     mBuffer = null;

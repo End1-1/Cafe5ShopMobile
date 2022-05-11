@@ -12,8 +12,14 @@ import androidx.annotation.NonNull;
 
 public class DialogClass extends Dialog implements View.OnClickListener {
 
+    public interface DialogYesNo {
+        void yes();
+        void no();
+    }
+
     private int mContentId;
     private String mMessage;
+    private DialogYesNo mDialogYesNo;
 
     public DialogClass(@NonNull Context context, int contentId, String message) {
         super(context);
@@ -28,9 +34,17 @@ public class DialogClass extends Dialog implements View.OnClickListener {
         setCancelable(false);
         setContentView(mContentId);
         ((TextView) findViewById(R.id.txtMessage)).setText(mMessage);
-        Button btnClose = findViewById(R.id.btnClose);
-        if (btnClose != null) {
-            btnClose.setOnClickListener(this);
+        Button btn = findViewById(R.id.btnClose);
+        if (btn != null) {
+            btn.setOnClickListener(this);
+        }
+        btn = findViewById(R.id.btnYes);
+        if (btn != null) {
+            btn.setOnClickListener(this);
+        }
+        btn = findViewById(R.id.btnNo);
+        if (btn != null) {
+            btn.setOnClickListener(this);
         }
     }
 
@@ -39,10 +53,28 @@ public class DialogClass extends Dialog implements View.OnClickListener {
          dc.show();
     }
 
+    public static void question(Context c, String s, DialogYesNo d) {
+        DialogClass dc = new DialogClass(c, R.layout.dialog_class_question_yesno, s);
+        dc.mDialogYesNo = d;
+        dc.show();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnClose:
+                dismiss();
+                break;
+            case R.id.btnYes:
+                if (mDialogYesNo != null) {
+                    mDialogYesNo.yes();
+                }
+                dismiss();
+                break;
+            case R.id.btnNo:
+                if (mDialogYesNo != null) {
+                    mDialogYesNo.no();
+                }
                 dismiss();
                 break;
         }
