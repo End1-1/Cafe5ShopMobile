@@ -21,13 +21,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ActivityClass extends AppCompatActivity implements View.OnClickListener {
 
-    protected int mMessageId;
+    protected static List<Integer> mMessageId = new ArrayList();
     protected NetworkTimerTask mTimerTask;
     private ProgressDialogClass mProgressDialog;
 
@@ -75,7 +77,8 @@ public class ActivityClass extends AppCompatActivity implements View.OnClickList
 
     protected void sendMessage(MessageMaker mm) {
         mTimerTask = new NetworkTimerTask(mm);
-        mMessageId = mm.send();
+        mMessageId.add(mm.send());
+        System.out.println(String.format("%d EEEE SEND", mm.mMessageId));
         new Timer().schedule(mTimerTask, 10000);
     }
 
@@ -111,31 +114,23 @@ public class ActivityClass extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void run() {
-            Intent timeoutIntent = new Intent(MessageMaker.BROADCAST_DATA);
-            timeoutIntent.putExtra("local", true);
-            timeoutIntent.putExtra("type", mMessage.getType());
-            timeoutIntent.putExtra("message_id", mMessage.getMessageId());
-            timeoutIntent.putExtra(MessageMaker.NETWORK_ERROR, true);
-            LocalBroadcastManager.getInstance(ActivityClass.this).sendBroadcast(timeoutIntent);
+            if (mMessageId.contains(Integer.valueOf(mMessage.getMessageId()))) {
+                Intent timeoutIntent = new Intent(MessageMaker.BROADCAST_DATA);
+                timeoutIntent.putExtra("local", true);
+                timeoutIntent.putExtra("type", mMessage.getType());
+                timeoutIntent.putExtra("message_id", mMessage.getMessageId());
+                timeoutIntent.putExtra(MessageMaker.NETWORK_ERROR, true);
+                LocalBroadcastManager.getInstance(ActivityClass.this).sendBroadcast(timeoutIntent);
+                System.out.println(String.format("%d EEEE TIMEOUT", mMessage.getMessageId()));
+            }
         }
     }
 
     protected BroadcastReceiver mSocketData = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            System.out.println(String.format("Activity message: %d, message id and timer task message id: %d - %d", intent.getShortExtra("type", (short) 0), mMessageId, mTimerTask == null ? 0 : mTimerTask.mMessage.getMessageId()));
-            if (mTimerTask != null) {
-                if (intent.getBooleanExtra(MessageMaker.NETWORK_ERROR, false)) {
-                    mTimerTask.cancel();
-                    mTimerTask = null;
-                }
-                if (mTimerTask != null) {
-                    if (mMessageId == mTimerTask.mMessage.getMessageId() && intent.getBooleanExtra("local", false)) {
-                        mTimerTask.cancel();
-                        mTimerTask = null;
-                    }
-                }
-            }
+            System.out.println(String.format("%d EEEE BACK", intent.getIntExtra("id", 0)));
+            mMessageId.remove(Integer.valueOf(intent.getIntExtra("id", 0)));
             if (!intent.getBooleanExtra("local", false)) {
                 return;
             }

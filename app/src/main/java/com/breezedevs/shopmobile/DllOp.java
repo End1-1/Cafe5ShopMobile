@@ -12,6 +12,7 @@ public class DllOp {
     public static final byte op_open_body = 11;
     public static final byte op_remove_goods_from_document = 12;
     public static final byte op_update_document = 13;
+    public static final byte op_update_goods = 14;
 
     public static final byte list_storages = 1;
 }

@@ -22,7 +22,7 @@ public class MessageMaker {
 
     public MessageMaker(short c) {
         mMessageType = c;
-        mMessageId = mMessageIdCounter++;
+        mMessageId = getNewMessageId();
         mBuffer = new byte[]{
                 0x03, 0x04, 0x15,               //pattern 0
                 0x00, 0x00, 0x00, 0x00,         //packet number 3
@@ -38,6 +38,10 @@ public class MessageMaker {
         bb.order(ByteOrder.LITTLE_ENDIAN);
         buf = bb.putShort(c).array();
         System.arraycopy(buf, 0, mBuffer, 11, 2);
+    }
+
+    public synchronized int getNewMessageId() {
+        return mMessageIdCounter++;
     }
 
     public double getDouble(byte[] bytes) {

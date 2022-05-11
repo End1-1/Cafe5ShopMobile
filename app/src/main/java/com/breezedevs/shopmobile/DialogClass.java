@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,9 +18,15 @@ public class DialogClass extends Dialog implements View.OnClickListener {
         void no();
     }
 
+    public interface DialogQty {
+        void qty(double v);
+        void no();
+    }
+
     private int mContentId;
     private String mMessage;
     private DialogYesNo mDialogYesNo;
+    private DialogQty mDialogQty;
 
     public DialogClass(@NonNull Context context, int contentId, String message) {
         super(context);
@@ -59,6 +66,12 @@ public class DialogClass extends Dialog implements View.OnClickListener {
         dc.show();
     }
 
+    public static void qty(Context c, String s, DialogQty d) {
+        DialogClass dc = new DialogClass(c, R.layout.dialog_class_qty_yesno, s);
+        dc.mDialogQty = d;
+        dc.show();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -69,11 +82,22 @@ public class DialogClass extends Dialog implements View.OnClickListener {
                 if (mDialogYesNo != null) {
                     mDialogYesNo.yes();
                 }
+                if (mDialogQty != null) {
+                    double value = 0;
+                    String txt = ((EditText) findViewById(R.id.edtQty)).getText().toString();
+                    if (txt.isEmpty() == false) {
+                        value = Double.valueOf(txt);
+                    }
+                    mDialogQty.qty(value);
+                }
                 dismiss();
                 break;
             case R.id.btnNo:
                 if (mDialogYesNo != null) {
                     mDialogYesNo.no();
+                }
+                if (mDialogQty != null) {
+                    mDialogQty.no();
                 }
                 dismiss();
                 break;

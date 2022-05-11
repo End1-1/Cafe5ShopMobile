@@ -57,7 +57,7 @@ public class ActivityEditDocument extends ActivityClass {
         _b.spStoreInput.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateDocument();
+                System.out.println(String.format("1. onItemSelected: %d - %d", i, l));
             }
 
             @Override
@@ -68,7 +68,7 @@ public class ActivityEditDocument extends ActivityClass {
         _b.spStoreOutput.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateDocument();
+                System.out.println(String.format("2. onItemSelected: %d - %d", i, l));
             }
 
             @Override
@@ -99,6 +99,12 @@ public class ActivityEditDocument extends ActivityClass {
             messageMaker.putString(mDocId);
             sendMessage(messageMaker);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        updateDocument();
+        super.onPause();
     }
 
     @Override
@@ -166,7 +172,7 @@ public class ActivityEditDocument extends ActivityClass {
                         _b.spStoreInput.setSelection(DataClass.indexOfStoreId(storein));
                         _b.spStoreOutput.setSelection(DataClass.indexOfStoreId(storeout));
                         _b.editScancode.setEnabled(true);
-                        setStoreFieldVisibility(); Preference.setLong("meas_msg", System.currentTimeMillis());
+                        setStoreFieldVisibility();
                         MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
                         messageMaker.putString("rwshop");
                         messageMaker.putString(Preference.getString("server_database"));
@@ -234,6 +240,23 @@ public class ActivityEditDocument extends ActivityClass {
                             DialogClass.error(this, error);
                             return;
                         }
+                        break;
+                    case DllOp.op_update_goods:
+                        success = mm.getByte(data);
+                        if (success == 0) {
+                            String error = mm.getString(data);
+                            DialogClass.error(this, error);
+                            return;
+                        }
+                        String rowid = mm.getString(data);
+                        for (int i = 0; i < mDocAdapter.mGoods.size(); i++) {
+                            if ( mDocAdapter.mGoods.get(i).rowId.equals(rowid)) {
+                                mDocAdapter.mGoods.get(i).qty = mm.getDouble(data);
+                                mDocAdapter.notifyDataSetChanged();
+                                return;
+                            }
+                        }
+                        break;
                 }
                 break;
         }
@@ -286,9 +309,9 @@ public class ActivityEditDocument extends ActivityClass {
         messageMaker.putByte(DllOp.op_update_document);
         messageMaker.putString(mDocId);
         int index = _b.spStoreInput.getSelectedItemPosition();
-        messageMaker.putInteger(DataClass.mStorages.get(index).id);
+        messageMaker.putInteger(index < 0 ? 0 : DataClass.mStorages.get(index).id);
         index = _b.spStoreOutput.getSelectedItemPosition();
-        messageMaker.putInteger(DataClass.mStorages.get(index).id);
+        messageMaker.putInteger(index < 0 ? 0 : DataClass.mStorages.get(index).id);
         sendMessage(messageMaker);
     }
 
@@ -423,6 +446,7 @@ public class ActivityEditDocument extends ActivityClass {
                 _i = i;
                 _i.getRoot().setOnClickListener(this);
                 _i.btnRemove.setOnClickListener(this);
+                _i.btnQty.setOnClickListener(this);
             }
 
             public void onBind(int position) {
@@ -433,9 +457,11 @@ public class ActivityEditDocument extends ActivityClass {
                 if (mRowIndex == position) {
                     _i.getRoot().setBackgroundColor(getColor(R.color.lightblue));
                     _i.btnRemove.setVisibility(View.VISIBLE);
+                    _i.btnQty.setVisibility(View.VISIBLE);
                 } else {
                     _i.getRoot().setBackgroundColor(getColor(R.color.white));
                     _i.btnRemove.setVisibility(View.GONE);
+                    _i.btnQty.setVisibility(View.GONE);
                 }
             }
 
@@ -453,6 +479,28 @@ public class ActivityEditDocument extends ActivityClass {
                                 messageMaker.putString(Preference.getString("server_database"));
                                 messageMaker.putByte(DllOp.op_remove_goods_from_document);
                                 messageMaker.putString(gr.rowId);
+                                sendMessage(messageMaker);
+                            }
+
+                            @Override
+                            public void no() {
+
+                            }
+                        });
+                        break;
+                    case R.id.btnQty:
+                        GoodsRow gr = mGoods.get(getAdapterPosition());
+                        DialogClass.qty(ActivityEditDocument.this, String.format("%s %s", gr.goodsName, gr.scancode), new DialogClass.DialogQty() {
+                            @Override
+                            public void qty(double v) {
+                                createProgressDialog();
+                                MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
+                                messageMaker.putString("rwshop");
+                                messageMaker.putString(Preference.getString("server_database"));
+                                messageMaker.putByte(DllOp.op_update_goods);
+                                messageMaker.putString(mDocId);
+                                messageMaker.putString(gr.rowId);
+                                messageMaker.putDouble(v);
                                 sendMessage(messageMaker);
                             }
 
