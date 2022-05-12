@@ -43,4 +43,5 @@
     <string name="yes">yes</string>
     <string name="no">no</string>
     <string name="confirm_to_delete">confirm to delete</string>
+    <string name="saved">saved</string>
 </resources>

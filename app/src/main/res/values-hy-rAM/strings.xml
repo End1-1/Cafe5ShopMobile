@@ -41,4 +41,5 @@
     <string name="yes">այո</string>
     <string name="no">ոչ</string>
     <string name="confirm_to_delete">հաստատեք հեռացումը</string>
+    <string name="saved">պահպանված է</string>
 </resources>

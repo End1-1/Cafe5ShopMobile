@@ -23,10 +23,15 @@ public class DialogClass extends Dialog implements View.OnClickListener {
         void no();
     }
 
+    public interface DialogOk {
+        void ok();
+    }
+
     private int mContentId;
     private String mMessage;
     private DialogYesNo mDialogYesNo;
     private DialogQty mDialogQty;
+    private DialogOk mDialogOk;
 
     public DialogClass(@NonNull Context context, int contentId, String message) {
         super(context);
@@ -60,6 +65,12 @@ public class DialogClass extends Dialog implements View.OnClickListener {
          dc.show();
     }
 
+    public static void information(Context c, String s, DialogOk d) {
+        DialogClass dc = new DialogClass(c, R.layout.dialog_class_information_ok, s);
+        dc.mDialogOk = d;
+        dc.show();
+    }
+
     public static void question(Context c, String s, DialogYesNo d) {
         DialogClass dc = new DialogClass(c, R.layout.dialog_class_question_yesno, s);
         dc.mDialogYesNo = d;
@@ -76,6 +87,9 @@ public class DialogClass extends Dialog implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnClose:
+                if (mDialogOk != null ){
+                    mDialogOk.ok();
+                }
                 dismiss();
                 break;
             case R.id.btnYes:

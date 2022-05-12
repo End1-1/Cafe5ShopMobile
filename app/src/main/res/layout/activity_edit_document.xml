@@ -40,6 +40,14 @@
             android:layout_marginRight="10dp"
             android:text="@string/edit_document" />
 
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="8dp"
+            android:visibility="gone"
+            android:src="@drawable/save" />
+
     </LinearLayout>
 
     <TextView

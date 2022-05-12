@@ -46,6 +46,7 @@ public class ActivityEditDocument extends ActivityClass {
         calendar.setTime(date);
         _b.txtCreateDate.setText(String.format("%02d/%02d/%d", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR)));
         _b.btnScan.setOnClickListener(this);
+        _b.btnSave.setOnClickListener(this);
         _b.editScancode.setOnKeyListener(editListener);
         _b.llBack.setOnClickListener(this);
         _b.rv.setLayoutManager(new GridLayoutManager(this, 1));
@@ -84,6 +85,7 @@ public class ActivityEditDocument extends ActivityClass {
         setStoreFieldVisibility();
         _b.btnCreateDocument.setOnClickListener(this);
         _b.btnCreateDocument.setVisibility(mDocId.isEmpty() ? View.VISIBLE : View.GONE);
+        _b.btnSave.setVisibility(mDocId.isEmpty() ? View.GONE : View.VISIBLE);
         setContentView(_b.getRoot());
     }
 
@@ -130,6 +132,9 @@ public class ActivityEditDocument extends ActivityClass {
                 Intent intent = new Intent(this, ActivityCodeReader.class);
                 mCodeResult.launch(intent);
                 break;
+            case R.id.btnSave:
+                saveDocument();
+                break;
         }
     }
 
@@ -156,6 +161,7 @@ public class ActivityEditDocument extends ActivityClass {
                         mDocId = mm.getString(data);
                         _b.btnCreateDocument.setVisibility(View.GONE);
                         _b.editScancode.setEnabled(true);
+                        _b.btnSave.setVisibility(View.VISIBLE);
                         break;
                     case DllOp.op_open_document:
                         success = mm.getByte(data);
@@ -257,6 +263,20 @@ public class ActivityEditDocument extends ActivityClass {
                             }
                         }
                         break;
+                    case DllOp.op_save_document:
+                        success = mm.getByte(data);
+                        if (success == 0) {
+                            String error = mm.getString(data);
+                            DialogClass.error(this, error);
+                            return;
+                        }
+                        DialogClass.information(this, getString(R.string.saved), new DialogClass.DialogOk() {
+                            @Override
+                            public void ok() {
+                                finish();
+                            }
+                        });
+                        break;
                 }
                 break;
         }
@@ -312,6 +332,15 @@ public class ActivityEditDocument extends ActivityClass {
         messageMaker.putInteger(index < 0 ? 0 : DataClass.mStorages.get(index).id);
         index = _b.spStoreOutput.getSelectedItemPosition();
         messageMaker.putInteger(index < 0 ? 0 : DataClass.mStorages.get(index).id);
+        sendMessage(messageMaker);
+    }
+
+    private void saveDocument() {
+        MessageMaker messageMaker = new MessageMaker(MessageList.dll_op);
+        messageMaker.putString("rwshop");
+        messageMaker.putString(Preference.getString("server_database"));
+        messageMaker.putByte(DllOp.op_save_document);
+        messageMaker.putString(mDocId);
         sendMessage(messageMaker);
     }
 
