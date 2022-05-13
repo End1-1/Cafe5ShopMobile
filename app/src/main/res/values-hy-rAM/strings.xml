@@ -42,4 +42,5 @@
     <string name="no">ոչ</string>
     <string name="confirm_to_delete">հաստատեք հեռացումը</string>
     <string name="saved">պահպանված է</string>
+    <string name="hide_quantity_from_store">չցուցադրել քանակը պահեստներում</string>
 </resources>

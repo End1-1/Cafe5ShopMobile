@@ -44,4 +44,5 @@
     <string name="no">no</string>
     <string name="confirm_to_delete">confirm to delete</string>
     <string name="saved">saved</string>
+    <string name="hide_quantity_from_store">hide quantity from store</string>
 </resources>

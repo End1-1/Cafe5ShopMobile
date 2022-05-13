@@ -28,6 +28,7 @@ public class ActivityCheckQuantity extends ActivityClass {
 
     private ActivityCheckQuantityBinding _b;
     private DataAdapter mDataAdapter;
+    private List<Integer> mHideQtyStore = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,11 @@ public class ActivityCheckQuantity extends ActivityClass {
         mDataAdapter = new DataAdapter();
         _b.rv.setLayoutManager(new GridLayoutManager(this, 1));
         _b.rv.setAdapter(mDataAdapter);
+        String hideqtystorestr = Preference.getString("server_hideqtystore");
+        String[] hideqtystorelist = hideqtystorestr.split(",");
+        for (int i = 0; i < hideqtystorelist.length; i++) {
+            mHideQtyStore.add(Integer.valueOf(hideqtystorelist[i]));
+        }
         setContentView(_b.getRoot());
     }
 
@@ -200,6 +206,7 @@ public class ActivityCheckQuantity extends ActivityClass {
         if (code.isEmpty()) {
             return;
         }
+        _b.edtScancode.setText("");
         createProgressDialog();
         mDataAdapter.data.clear();
         mDataAdapter.notifyDataSetChanged();
@@ -270,7 +277,11 @@ public class ActivityCheckQuantity extends ActivityClass {
             public void bind(int index) {
                 GoodsQtyClass or = data.get(index);
                 _i.txtStoreName.setText(or.storeName);
-                _i.txtQty.setText(format.format(or.qty));
+                if (mHideQtyStore.contains(Integer.valueOf(or.store))) {
+                    _i.txtQty.setText("V");
+                } else {
+                    _i.txtQty.setText(format.format(or.qty));
+                }
                 _i.txtReserved.setText(format.format(or.reserveQty));
             }
         }
