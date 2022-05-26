@@ -184,8 +184,12 @@ public class ServiceSocket {
                 try {
                     if (mBytesLeft == -1) {
                         br = mInputStream.read(bytes, 0,17);
+                        if (br == -1) {
+                            Log.d("CONNECTION CLOSED, PROBABLY BY REMOTE HOST: ", "Bye #1");
+                            return;
+                        }
                         if (br < 17) {
-                            Log.d("CONNECTION CLOSED: ", "Bye #1");
+                            Log.d("CONNECTION CLOSED: ", "Bye #2");
                             return;
                         }
                         System.arraycopy(bytes, 0, buffPattern, 0, 3);

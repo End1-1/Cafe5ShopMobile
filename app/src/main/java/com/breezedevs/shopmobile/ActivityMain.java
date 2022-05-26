@@ -19,6 +19,7 @@ import com.breezedevs.shopmobile.databinding.ActivityMainBinding;
 public class ActivityMain extends ActivityClass {
 
     private static final int PERMISSION_CAMERA_REQUEST = 1;
+    private static final int PERMISSION_WRITE_STORAGE_REQUEST = 2;
     private ActivityMainBinding _b;
 
     @Override
@@ -29,6 +30,9 @@ public class ActivityMain extends ActivityClass {
         _b.btnConfig.setOnClickListener(this);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
              ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, PERMISSION_CAMERA_REQUEST);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_WRITE_STORAGE_REQUEST);
         }
     }
 
@@ -48,6 +52,8 @@ public class ActivityMain extends ActivityClass {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_CAMERA_REQUEST:
+                break;
+            case PERMISSION_WRITE_STORAGE_REQUEST:
                 break;
         }
     }

@@ -85,7 +85,7 @@ public class ActivityCheckQuantity extends ActivityClass {
                 replaceSize(((Button) view).getText().toString());
             break;
             case R.id.btnShowImage:
-                String scancode = _b.edtScancode.getText().toString();
+                String scancode = _b.txtLastViewed.getText().toString();
                 if (scancode.isEmpty()) {
                     return;
                 }
@@ -192,7 +192,7 @@ public class ActivityCheckQuantity extends ActivityClass {
     }
 
     private void replaceSize(String sz) {
-        String str = _b.edtScancode.getText().toString();
+        String str = _b.txtLastViewed.getText().toString();
         if (str.length() < 2) {
             return;
         }
@@ -206,6 +206,7 @@ public class ActivityCheckQuantity extends ActivityClass {
         if (code.isEmpty()) {
             return;
         }
+        _b.txtLastViewed.setText(_b.edtScancode.getText().toString());
         _b.edtScancode.setText("");
         createProgressDialog();
         mDataAdapter.data.clear();
